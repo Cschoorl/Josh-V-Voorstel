@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JOSH V — AI Implementation Program</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #faf8f5;
+    --ink: #1a1a1a;
+    --muted: #8a8580;
+    --line: #e8e4dd;
+    --accent: #b8a98f;
+    --serif: 'Cormorant Garamond', 'Times New Roman', serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+  }
+
+  .deck {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7vh 8vw;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+  }
+
+  .slide.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .slide-inner {
+    width: 100%;
+    max-width: 1100px;
+    text-align: center;
+  }
+
+  /* Brand mark */
+  .brand-mark {
+    position: fixed;
+    top: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.45em;
+    color: var(--ink);
+    font-weight: 400;
+    z-index: 10;
+  }
+
+  /* Section eyebrow (italic uppercase) */
+  .eyebrow {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 56px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(40px, 5.6vw, 78px);
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    margin-bottom: 28px;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(34px, 4.4vw, 60px);
+    line-height: 1.15;
+    margin-bottom: 32px;
+  }
+
+  .subtitle {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(18px, 1.6vw, 22px);
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 0;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .body-text {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(16px, 1.3vw, 19px);
+    line-height: 1.7;
+    color: var(--ink);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--ink);
+    margin: 36px auto;
+  }
+
+  /* Bullet list */
+  .bullets {
+    list-style: none;
+    max-width: 620px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .bullets li {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(17px, 1.4vw, 20px);
+    line-height: 1.6;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .bullets li:last-child { border-bottom: none; }
+
+  /* Teams grid */
+  .teams-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--line);
+    margin-top: 56px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .team-cell {
+    background: var(--bg);
+    padding: 36px 16px;
+    text-align: center;
+  }
+
+  .team-cell .num {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .team-cell .name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(16px, 1.3vw, 19px);
+    line-height: 1.3;
+  }
+
+  /* Two-column for slide 7 */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 60px;
+    margin-top: 48px;
+    text-align: left;
+  }
+
+  /* Three-column for operational teams */
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr 1px 1fr;
+    gap: 40px;
+    margin-top: 48px;
+    text-align: left;
+  }
+
+  /* Four-step process grid */
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    margin-top: 56px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .process-cell {
+    background: var(--bg);
+    padding: 36px 22px;
+    text-align: center;
+  }
+
+  .process-cell .step-num {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .process-cell .step-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(20px, 1.7vw, 24px);
+    margin-bottom: 12px;
+  }
+
+  .process-cell .step-desc {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .max-badge {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    font-weight: 500;
+    border: 1px solid var(--ink);
+    padding: 6px 14px;
+    margin-bottom: 28px;
+  }
+
+  .col-divider {
+    background: var(--line);
+    width: 1px;
+  }
+
+  .col h3 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .col ul {
+    list-style: none;
+  }
+
+  .col li {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(16px, 1.2vw, 18px);
+    line-height: 1.7;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .col li:last-child { border: none; }
+
+  /* Service tags */
+  .tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 40px auto 32px;
+    max-width: 760px;
+  }
+
+  .tag {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    padding: 10px 22px;
+    font-weight: 400;
+  }
+
+  .meta {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    margin-top: 32px;
+  }
+
+  .meta span {
+    display: inline-block;
+    margin: 0 18px;
+  }
+
+  .meta .sep {
+    color: var(--muted);
+    margin: 0 4px;
+  }
+
+  /* Timeline (slide 8) */
+  .timeline {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+    margin: 56px auto 48px;
+    max-width: 980px;
+    text-align: center;
+    position: relative;
+  }
+
+  .phase {
+    padding: 0 12px;
+  }
+
+  .phase .when {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .phase .title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(22px, 2vw, 28px);
+    margin-bottom: 14px;
+  }
+
+  .phase .desc {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .timeline-line {
+    position: absolute;
+    top: 22px;
+    left: 12%;
+    right: 12%;
+    height: 1px;
+    background: var(--line);
+    z-index: 0;
+  }
+
+  .investment {
+    border-top: 1px solid var(--line);
+    padding-top: 36px;
+    margin-top: 8px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .investment .label {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .investment .price {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.2;
+  }
+
+  .investment .price small {
+    font-size: 0.5em;
+    color: var(--muted);
+    font-style: italic;
+    display: block;
+    margin-top: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Title slide special treatment */
+  .slide-title .ornament {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 24px;
+    color: var(--ink);
+    margin-bottom: 36px;
+    letter-spacing: 0.3em;
+  }
+
+  /* Navigation */
+  .nav {
+    position: fixed;
+    bottom: 36px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 48px;
+    z-index: 20;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 12px 4px;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-btn:hover { opacity: 0.5; }
+  .nav-btn:disabled { opacity: 0.2; cursor: default; }
+
+  .nav-btn .arrow {
+    font-family: var(--sans);
+    font-size: 16px;
+    font-style: normal;
+  }
+
+  .counter {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  .counter .total { color: var(--muted); }
+
+  /* Progress dots */
+  .progress {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 20;
+  }
+
+  .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--line);
+    transition: background 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+  }
+
+  .dot.active {
+    background: var(--ink);
+    transform: scale(1.4);
+  }
+
+  /* Slide-specific */
+  .slide-1 .slide-inner { text-align: center; }
+
+  .slide-1 .brand-line {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    color: var(--muted);
+    margin-top: 80px;
+  }
+
+  /* Responsive */
+  @media (max-width: 880px) {
+    .slide { padding: 9vh 6vw; }
+    .teams-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; gap: 40px; }
+    .three-col { grid-template-columns: 1fr; gap: 32px; }
+    .process-grid,
+    .process-grid[style] { grid-template-columns: 1fr !important; }
+    .col-divider { display: none; }
+    .timeline { grid-template-columns: 1fr; gap: 36px; }
+    .timeline-line { display: none; }
+    .nav { padding: 0 24px; }
+    .brand-mark { top: 24px; font-size: 10px; }
+  }
+
+  @media (max-height: 700px) {
+    .eyebrow { margin-bottom: 32px; }
+    .teams-grid { margin-top: 36px; }
+    .timeline { margin: 36px auto 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="brand-mark">JOSH V</div>
+
+<div class="deck" id="deck">
+
+  <!-- SLIDE 1 — TITEL -->
+  <section class="slide slide-1 slide-title active" data-slide="1">
+    <div class="slide-inner">
+      <div class="ornament">— I —</div>
+      <h1>AI Implementatie<br/>Programma</h1>
+      <div class="divider"></div>
+      <p class="subtitle">Per afdeling. Naast het team.</p>
+      <div class="brand-line">VOORSTEL VOOR JOSH V</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 — DE ZORG -->
+  <section class="slide" data-slide="2">
+    <div class="slide-inner">
+      <div class="eyebrow">De zorg</div>
+      <h2>De training landt.<br/>De zorg blijft.</h2>
+      <div class="divider"></div>
+      <ul class="bullets">
+        <li>De teams zijn enthousiast en willen direct aan de slag</li>
+        <li>Maar zonder begeleiding gebruikt iedereen AI op een eigen manier</li>
+        <li>Het risico: inconsistente kwaliteit en gemiste kansen</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 — DE AANPAK -->
+  <section class="slide" data-slide="3">
+    <div class="slide-inner">
+      <div class="eyebrow">De aanpak</div>
+      <h2>Naast het team.<br/>Eén dag per afdeling.</h2>
+      <div class="divider"></div>
+      <p class="body-text">Geen klassikale training. We schuiven aan bij elke afdeling, kijken mee met het echte werk en helpen daar waar het ertoe doet — met de juiste tool, op het juiste moment.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 — DE DAG -->
+  <section class="slide" data-slide="4">
+    <div class="slide-inner">
+      <div class="eyebrow">De dag</div>
+      <h2>Drie momenten.<br/>Eén dag.</h2>
+      <div class="process-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="process-cell">
+          <div class="step-num">OCHTEND</div>
+          <div class="step-title">Kickoff</div>
+          <div class="step-desc">Verwachtingen, doelen en scope. We stemmen af waar we de dag op focussen.</div>
+        </div>
+        <div class="process-cell">
+          <div class="step-num">DAG</div>
+          <div class="step-title">Aan het werk</div>
+          <div class="step-desc">Meekijken met het echte werk. Kansen spotten, tools introduceren, direct toepassen.</div>
+        </div>
+        <div class="process-cell">
+          <div class="step-num">EINDE</div>
+          <div class="step-title">Recap</div>
+          <div class="step-desc">Wat hebben we gevonden, wat gaat het team morgen anders doen, en hoe borgen we het.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 — DE AFDELINGEN -->
+  <section class="slide" data-slide="5">
+    <div class="slide-inner">
+      <div class="eyebrow">De afdelingen</div>
+      <h2>Per afdeling.<br/>Op maat.</h2>
+      <p class="body-text">Voor elke afdeling die meedoet een eigen dag — afgestemd op hun werk, hun tempo en hun tools. Welke afdelingen aanhaken bepalen we samen.</p>
+      <div class="teams-grid">
+        <div class="team-cell">
+          <div class="num">—</div>
+          <div class="name">E-commerce</div>
+        </div>
+        <div class="team-cell">
+          <div class="num">—</div>
+          <div class="name">Customer<br/>Service</div>
+        </div>
+        <div class="team-cell">
+          <div class="num">—</div>
+          <div class="name">Management</div>
+        </div>
+        <div class="team-cell">
+          <div class="num">—</div>
+          <div class="name">Design</div>
+        </div>
+        <div class="team-cell">
+          <div class="num">—</div>
+          <div class="name">Marketing</div>
+        </div>
+      </div>
+      <p class="body-text" style="margin-top: 32px; font-size: 14px; color: var(--muted);">Voorbeelden — definitieve scope in overleg.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 6 — OPERATIONELE TEAMS -->
+  <section class="slide" data-slide="6">
+    <div class="slide-inner">
+      <div class="eyebrow">Operationele teams</div>
+      <h2>Sneller. Slimmer.<br/>Consistenter.</h2>
+      <div class="three-col">
+        <div class="col">
+          <h3>E-commerce</h3>
+          <ul>
+            <li>Productteksten</li>
+            <li>Reviews analyseren</li>
+            <li>Prijsinzichten</li>
+            <li>FAQ automatisch</li>
+          </ul>
+        </div>
+        <div class="col-divider"></div>
+        <div class="col">
+          <h3>Customer Service</h3>
+          <ul>
+            <li>Antwoordtemplates</li>
+            <li>Ticket routing</li>
+            <li>Tone of voice</li>
+            <li>Snellere afhandeling</li>
+          </ul>
+        </div>
+        <div class="col-divider"></div>
+        <div class="col">
+          <h3>Management</h3>
+          <ul>
+            <li>Rapporten analyseren</li>
+            <li>Meetings samenvatten</li>
+            <li>Trends spotten</li>
+            <li>Executive summaries</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 7 — CREATIEVE TEAMS — MET MAX -->
+  <section class="slide" data-slide="7">
+    <div class="slide-inner">
+      <div class="eyebrow">Creatieve teams</div>
+      <span class="max-badge">MET MAX</span>
+      <h2>Design &amp; Marketing.<br/>Met creatieve diepgang.</h2>
+      <p class="body-text">Voor de creatieve afdelingen haken we MAX aan — voor design en marketing met visie en vakmanschap, niet alleen prompts.</p>
+      <div class="two-col">
+        <div class="col">
+          <h3>Design</h3>
+          <ul>
+            <li>Ideeën &amp; concepten</li>
+            <li>Visuele varianten</li>
+            <li>Mood boards</li>
+            <li>Creatieve exploratie</li>
+          </ul>
+        </div>
+        <div class="col-divider"></div>
+        <div class="col">
+          <h3>Marketing</h3>
+          <ul>
+            <li>Copy &amp; teksten</li>
+            <li>Campagnes</li>
+            <li>Content kalender</li>
+            <li>Kanaalstrategie</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 8 — INVESTERING -->
+  <section class="slide" data-slide="8">
+    <div class="slide-inner">
+      <div class="eyebrow">Investering</div>
+      <h2>Per afdeling.<br/>Schaalbaar.</h2>
+      <div class="timeline">
+        <div class="timeline-line"></div>
+        <div class="phase">
+          <div class="when">Per afdeling</div>
+          <div class="title">Operationeel</div>
+          <div class="desc">Bijv. E-commerce, Customer Service, Management.<br/><br/><em>€3.000 — 3.600</em></div>
+        </div>
+        <div class="phase">
+          <div class="when">Per afdeling</div>
+          <div class="title">Creatief — met MAX</div>
+          <div class="desc">Design of Marketing, met creatieve diepgang.<br/><br/><em>€4.500 — 5.500</em></div>
+        </div>
+        <div class="phase">
+          <div class="when">Volledig</div>
+          <div class="title">Volledig pakket</div>
+          <div class="desc">Alle afdelingen die meedoen, met korting bij meerdere.<br/><br/><em>Op aanvraag</em></div>
+        </div>
+      </div>
+      <div class="investment">
+        <div class="label">Volgende stap</div>
+        <div class="price" style="font-size: clamp(20px, 1.8vw, 24px); letter-spacing: 0.05em;">Samen bepalen welke afdelingen aanhaken — en starten met de eerste dag.</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Progress dots -->
+<div class="progress" id="progress"></div>
+
+<!-- Navigation -->
+<nav class="nav">
+  <button class="nav-btn" id="prev" aria-label="Vorige slide">
+    <span class="arrow">←</span><span>Vorige</span>
+  </button>
+  <div class="counter">
+    <span id="current">01</span><span class="total"> / 08</span>
+  </div>
+  <button class="nav-btn" id="next" aria-label="Volgende slide">
+    <span>Volgende</span><span class="arrow">→</span>
+  </button>
+</nav>
+
+<script>
+  (function () {
+    const slides = document.querySelectorAll('.slide');
+    const total = slides.length;
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const currentEl = document.getElementById('current');
+    const progress = document.getElementById('progress');
+    let index = 0;
+
+    for (let i = 0; i < total; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      dot.addEventListener('click', () => goTo(i));
+      progress.appendChild(dot);
+    }
+    const dots = progress.querySelectorAll('.dot');
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function update() {
+      slides.forEach((s, i) => s.classList.toggle('active', i === index));
+      dots.forEach((d, i) => d.classList.toggle('active', i === index));
+      currentEl.textContent = pad(index + 1);
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === total - 1;
+    }
+
+    function goTo(i) {
+      if (i < 0 || i >= total) return;
+      index = i;
+      update();
+    }
+
+    function next() { goTo(index + 1); }
+    function prev() { goTo(index - 1); }
+
+    prevBtn.addEventListener('click', prev);
+    nextBtn.addEventListener('click', next);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault(); next();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault(); prev();
+      } else if (e.key === 'Home') {
+        e.preventDefault(); goTo(0);
+      } else if (e.key === 'End') {
+        e.preventDefault(); goTo(total - 1);
+      }
+    });
+
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+    document.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 50) dx < 0 ? next() : prev();
+    }, { passive: true });
+
+    update();
+  })();
+</script>
+
+</body>
+</html>
