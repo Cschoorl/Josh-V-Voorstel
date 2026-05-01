@@ -415,6 +415,37 @@
     margin-bottom: 28px;
   }
 
+  /* Person blocks (Caesar / Max) */
+  .person-name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 2.8vw, 42px);
+    letter-spacing: 0.01em;
+    margin-bottom: 14px;
+    line-height: 1.1;
+  }
+
+  .person-role {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+
+  /* Closing slide */
+  .slide-closing .closing-line {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    color: var(--muted);
+    margin-top: 80px;
+    text-transform: uppercase;
+  }
+
   .col-divider {
     background: var(--line);
     width: 1px;
@@ -764,8 +795,36 @@
     </div>
   </section>
 
-  <!-- SLIDE 5 — DE AFDELINGEN -->
+  <!-- SLIDE 5 — WIE DOET WAT (CAESAR & MAX) -->
   <section class="slide" data-slide="5">
+    <div class="slide-inner">
+      <div class="eyebrow">Wie doet wat</div>
+      <h2>Twee specialisten.<br/>Eén aanpak.</h2>
+      <div class="two-col" style="margin-top: 56px;">
+        <div class="col">
+          <div class="person-name">Caesar</div>
+          <div class="person-role">Operationele teams</div>
+          <ul>
+            <li>E-commerce</li>
+            <li>Customer Service</li>
+            <li>Management</li>
+          </ul>
+        </div>
+        <div class="col-divider"></div>
+        <div class="col">
+          <div class="person-name">Max</div>
+          <div class="person-role">Creatieve teams</div>
+          <ul>
+            <li>Design</li>
+            <li>Marketing</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6 — DE AFDELINGEN -->
+  <section class="slide" data-slide="6">
     <div class="slide-inner">
       <div class="eyebrow">De afdelingen</div>
       <h2>Per afdeling.<br/>Op maat.</h2>
@@ -800,11 +859,11 @@
     </div>
   </section>
 
-  <!-- SLIDE 6 — INVESTERING -->
-  <section class="slide" data-slide="6">
+  <!-- SLIDE 7 — INVESTERING -->
+  <section class="slide" data-slide="7">
     <div class="slide-inner">
       <div class="eyebrow">Investering</div>
-      <h2>Transparant.<br/>Per uur opgebouwd.</h2>
+      <h2>Per uur opgebouwd.</h2>
       <div class="hours-block">
         <div class="label">Per afdeling</div>
         <div class="hours-row">
@@ -838,47 +897,16 @@
           <span class="amount">€7.800</span>
         </div>
       </div>
-      <p class="body-text" style="margin-top: 24px; font-size: 12px; color: var(--muted); letter-spacing: 0.05em;">Volgende stap: planning afstemmen en de eerste dag inplannen.</p>
     </div>
   </section>
 
-  <!-- SLIDE 7 — TOT SLOT / SAMENGEVAT -->
-  <section class="slide" data-slide="7">
+  <!-- SLIDE 8 — TOT SLOT (CLOSING) -->
+  <section class="slide slide-title slide-closing" data-slide="8">
     <div class="slide-inner">
-      <div class="eyebrow">Tot slot</div>
-      <h2>Eén traject.<br/>Eén belofte.</h2>
-      <div class="three-col" style="margin-top: 48px;">
-        <div class="col">
-          <h3>Dit gaan we doen</h3>
-          <ul>
-            <li>Eén dag per afdeling</li>
-            <li>Naast het team — in het werk</li>
-            <li>Concrete tools, op maat</li>
-            <li>Borging na de dag</li>
-          </ul>
-        </div>
-        <div class="col-divider"></div>
-        <div class="col">
-          <h3>Dit is de prijs</h3>
-          <ul>
-            <li>€7.800 totaal</li>
-            <li>€120 per uur</li>
-            <li>Volledig transparant</li>
-            <li>Geen verborgen kosten</li>
-          </ul>
-        </div>
-        <div class="col-divider"></div>
-        <div class="col">
-          <h3>Dit krijg je terug</h3>
-          <ul>
-            <li>Een team dat AI écht gebruikt</li>
-            <li>Mini-playbook per afdeling</li>
-            <li>Consistente werkwijze</li>
-            <li>Direct toepasbare resultaten</li>
-          </ul>
-        </div>
-      </div>
-      <p class="body-text" style="margin-top: 48px; font-family: var(--serif); font-style: italic; font-size: clamp(18px, 1.5vw, 22px); color: var(--ink); letter-spacing: 0.02em;">Klaar om te starten?</p>
+      <div class="ornament">— TOT SLOT —</div>
+      <h1>Eén dag per team.<br/>Een blijvend verschil.</h1>
+      <div class="divider"></div>
+      <p class="subtitle">Klaar voor de eerste dag?</p>
     </div>
   </section>
 
@@ -893,7 +921,7 @@
     <span class="arrow">←</span><span>Vorige</span>
   </button>
   <div class="counter">
-    <span id="current">01</span><span class="total"> / 07</span>
+    <span id="current">01</span><span class="total"> / 08</span>
   </div>
   <button class="nav-btn" id="next" aria-label="Volgende slide">
     <span>Volgende</span><span class="arrow">→</span>
