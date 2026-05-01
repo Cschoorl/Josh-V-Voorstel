@@ -305,6 +305,62 @@
     letter-spacing: 0.02em;
   }
 
+  /* Formula block — pricing calculation */
+  .formula-block {
+    max-width: 520px;
+    margin: 32px auto 0;
+  }
+
+  .formula-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 12px 0;
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: clamp(13px, 1vw, 15px);
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+  }
+
+  .formula-line .calc { color: var(--muted); }
+
+  .formula-line .amount {
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
+    margin-left: 16px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .formula-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 1px solid var(--ink);
+    padding-top: 22px;
+    margin-top: 8px;
+  }
+
+  .formula-total .label-text {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(18px, 1.5vw, 22px);
+    color: var(--ink);
+  }
+
+  .formula-total .amount {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(28px, 2.6vw, 38px);
+    color: var(--ink);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
   /* Four-step process grid */
   .process-grid {
     display: grid;
@@ -748,13 +804,9 @@
   <section class="slide" data-slide="6">
     <div class="slide-inner">
       <div class="eyebrow">Investering</div>
-      <h2>Eén traject.<br/>Vijf afdelingen.</h2>
-      <div class="investment" style="margin-top: 32px; border-top: none; padding-top: 0;">
-        <div class="label">Totaalprijs — volledig programma</div>
-        <div class="price">€7.500 — €9.500</div>
-      </div>
+      <h2>Transparant.<br/>Per uur opgebouwd.</h2>
       <div class="hours-block">
-        <div class="label">Wat zit er in dit bedrag — per afdeling</div>
+        <div class="label">Per afdeling</div>
         <div class="hours-row">
           <span class="item">Voorbereiding &amp; research</span>
           <span class="value">3 uur</span>
@@ -775,13 +827,18 @@
           <span class="item">Per afdeling</span>
           <span class="value">13 uur</span>
         </div>
-        <div class="hours-totals">
-          5 afdelingen × 13 uur &nbsp;=&nbsp; 65 uur<br/>
-          + MAX bij Design &amp; Marketing &nbsp;=&nbsp; 12 uur
-          <span class="grand">~ 77 uur effectief werk</span>
+      </div>
+      <div class="formula-block">
+        <div class="formula-line">
+          <span class="calc">13 uur &nbsp;×&nbsp; €120/uur &nbsp;×&nbsp; 5 afdelingen</span>
+          <span class="amount">€7.800</span>
+        </div>
+        <div class="formula-total">
+          <span class="label-text">Totaal investering</span>
+          <span class="amount">€7.800</span>
         </div>
       </div>
-      <p class="body-text" style="margin-top: 32px; font-size: 13px; color: var(--muted); letter-spacing: 0.05em;">Volgende stap: planning afstemmen en de eerste dag inplannen.</p>
+      <p class="body-text" style="margin-top: 24px; font-size: 12px; color: var(--muted); letter-spacing: 0.05em;">Volgende stap: planning afstemmen en de eerste dag inplannen.</p>
     </div>
   </section>
 
