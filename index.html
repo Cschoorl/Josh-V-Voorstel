@@ -207,6 +207,75 @@
     text-align: left;
   }
 
+  /* Hours breakdown table */
+  .hours-block {
+    max-width: 520px;
+    margin: 48px auto 0;
+    text-align: left;
+  }
+
+  .hours-block .label {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .hours-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(15px, 1.15vw, 17px);
+    line-height: 1.5;
+  }
+
+  .hours-row .item { color: var(--ink); }
+  .hours-row .value {
+    font-weight: 400;
+    color: var(--ink);
+    white-space: nowrap;
+    margin-left: 16px;
+  }
+
+  .hours-row.subtotal {
+    border-bottom: none;
+    padding-top: 16px;
+    margin-top: 4px;
+    border-top: 1px solid var(--ink);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(16px, 1.25vw, 18px);
+  }
+
+  .hours-totals {
+    margin-top: 24px;
+    text-align: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .hours-totals .grand {
+    display: block;
+    margin-top: 10px;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(15px, 1.2vw, 17px);
+    color: var(--ink);
+    letter-spacing: 0.03em;
+  }
+
   /* Four-step process grid */
   .process-grid {
     display: grid;
@@ -710,29 +779,40 @@
   <section class="slide" data-slide="8">
     <div class="slide-inner">
       <div class="eyebrow">Investering</div>
-      <h2>Per afdeling.<br/>Schaalbaar.</h2>
-      <div class="timeline">
-        <div class="timeline-line"></div>
-        <div class="phase">
-          <div class="when">Per afdeling — 1 dag</div>
-          <div class="title">Operationeel</div>
-          <div class="desc">Bijv. E-commerce, Customer Service, Management.<br/><br/><em>€750 — €1.000</em></div>
+      <h2>Eén traject.<br/>Vijf afdelingen.</h2>
+      <div class="investment" style="margin-top: 32px; border-top: none; padding-top: 0;">
+        <div class="label">Totaalprijs — volledig programma</div>
+        <div class="price">€7.500 — €9.500</div>
+      </div>
+      <div class="hours-block">
+        <div class="label">Wat zit er in dit bedrag — per afdeling</div>
+        <div class="hours-row">
+          <span class="item">Voorbereiding &amp; research</span>
+          <span class="value">3 uur</span>
         </div>
-        <div class="phase">
-          <div class="when">Per afdeling — 1 dag</div>
-          <div class="title">Creatief — met MAX</div>
-          <div class="desc">Design of Marketing, met creatieve diepgang.<br/><br/><em>€1.500 — €2.000</em></div>
+        <div class="hours-row">
+          <span class="item">Dag op locatie — meekijken &amp; coachen</span>
+          <span class="value">6 uur</span>
         </div>
-        <div class="phase">
-          <div class="when">Volledig</div>
-          <div class="title">Volledig pakket</div>
-          <div class="desc">Alle afdelingen die meedoen, met korting bij meerdere.<br/><br/><em>Op aanvraag</em></div>
+        <div class="hours-row">
+          <span class="item">Recap-document &amp; mini-playbook</span>
+          <span class="value">3 uur</span>
+        </div>
+        <div class="hours-row">
+          <span class="item">Follow-up vragen na de dag</span>
+          <span class="value">1 uur</span>
+        </div>
+        <div class="hours-row subtotal">
+          <span class="item">Per afdeling</span>
+          <span class="value">13 uur</span>
+        </div>
+        <div class="hours-totals">
+          5 afdelingen × 13 uur &nbsp;=&nbsp; 65 uur<br/>
+          + MAX bij Design &amp; Marketing &nbsp;=&nbsp; 12 uur
+          <span class="grand">~ 77 uur effectief werk</span>
         </div>
       </div>
-      <div class="investment">
-        <div class="label">Volgende stap</div>
-        <div class="price" style="font-size: clamp(20px, 1.8vw, 24px); letter-spacing: 0.05em;">Samen bepalen welke afdelingen aanhaken — en starten met de eerste dag.</div>
-      </div>
+      <p class="body-text" style="margin-top: 32px; font-size: 13px; color: var(--muted); letter-spacing: 0.05em;">Volgende stap: planning afstemmen en de eerste dag inplannen.</p>
     </div>
   </section>
 
