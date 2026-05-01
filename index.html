@@ -109,7 +109,7 @@
     font-family: var(--serif);
     font-style: italic;
     font-weight: 300;
-    font-size: clamp(18px, 1.6vw, 22px);
+    font-size: clamp(18px, 1.5vw, 21px);
     color: var(--ink);
     line-height: 1.5;
     margin-bottom: 0;
@@ -119,14 +119,15 @@
   }
 
   .body-text {
-    font-family: var(--serif);
-    font-style: italic;
+    font-family: var(--sans);
+    font-style: normal;
     font-weight: 300;
-    font-size: clamp(16px, 1.3vw, 19px);
+    font-size: clamp(14px, 1.05vw, 16px);
     line-height: 1.7;
     color: var(--ink);
-    max-width: 680px;
+    max-width: 580px;
     margin: 0 auto;
+    letter-spacing: 0.01em;
   }
 
   .divider {
@@ -145,13 +146,14 @@
   }
 
   .bullets li {
-    font-family: var(--serif);
-    font-style: italic;
+    font-family: var(--sans);
+    font-style: normal;
     font-weight: 300;
-    font-size: clamp(17px, 1.4vw, 20px);
+    font-size: clamp(15px, 1.15vw, 17px);
     line-height: 1.6;
-    padding: 18px 0;
+    padding: 20px 0;
     border-bottom: 1px solid var(--line);
+    letter-spacing: 0.01em;
   }
 
   .bullets li:last-child { border-bottom: none; }
@@ -159,7 +161,7 @@
   /* Teams grid */
   .teams-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 1px;
     background: var(--line);
     margin-top: 56px;
@@ -169,8 +171,12 @@
 
   .team-cell {
     background: var(--bg);
-    padding: 36px 16px;
+    padding: 36px 14px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 140px;
   }
 
   .team-cell .num {
@@ -185,8 +191,22 @@
     font-family: var(--serif);
     font-style: italic;
     font-weight: 400;
-    font-size: clamp(16px, 1.3vw, 19px);
+    font-size: clamp(15px, 1.2vw, 18px);
     line-height: 1.3;
+  }
+
+  .team-cell.team-cell-open .num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    letter-spacing: 0;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .team-cell.team-cell-open .name {
+    color: var(--muted);
+    font-size: clamp(13px, 1vw, 15px);
   }
 
   /* Two-column for slide 7 */
@@ -228,52 +248,61 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    padding: 12px 0;
+    padding: 14px 0;
     border-bottom: 1px solid var(--line);
-    font-family: var(--serif);
-    font-style: italic;
+    font-family: var(--sans);
+    font-style: normal;
     font-weight: 300;
-    font-size: clamp(15px, 1.15vw, 17px);
+    font-size: clamp(13px, 1vw, 15px);
     line-height: 1.5;
+    letter-spacing: 0.01em;
   }
 
   .hours-row .item { color: var(--ink); }
   .hours-row .value {
-    font-weight: 400;
+    font-weight: 500;
     color: var(--ink);
     white-space: nowrap;
     margin-left: 16px;
+    font-variant-numeric: tabular-nums;
   }
 
   .hours-row.subtotal {
     border-bottom: none;
-    padding-top: 16px;
+    padding-top: 18px;
     margin-top: 4px;
     border-top: 1px solid var(--ink);
+    font-family: var(--serif);
     font-style: italic;
+    font-weight: 400;
+    font-size: clamp(15px, 1.2vw, 17px);
+  }
+
+  .hours-row.subtotal .value {
     font-weight: 500;
-    font-size: clamp(16px, 1.25vw, 18px);
   }
 
   .hours-totals {
     margin-top: 24px;
     text-align: center;
-    font-family: var(--serif);
-    font-style: italic;
+    font-family: var(--sans);
+    font-style: normal;
     font-weight: 300;
-    font-size: 14px;
+    font-size: 12px;
     color: var(--muted);
-    line-height: 1.8;
+    line-height: 1.9;
+    letter-spacing: 0.04em;
   }
 
   .hours-totals .grand {
     display: block;
-    margin-top: 10px;
+    margin-top: 12px;
+    font-family: var(--serif);
     font-style: italic;
-    font-weight: 500;
+    font-weight: 400;
     font-size: clamp(15px, 1.2vw, 17px);
     color: var(--ink);
-    letter-spacing: 0.03em;
+    letter-spacing: 0.02em;
   }
 
   /* Four-step process grid */
@@ -310,12 +339,13 @@
   }
 
   .process-cell .step-desc {
-    font-family: var(--serif);
-    font-style: italic;
+    font-family: var(--sans);
+    font-style: normal;
     font-weight: 300;
-    font-size: 14px;
-    line-height: 1.55;
+    font-size: 13px;
+    line-height: 1.6;
     color: var(--muted);
+    letter-spacing: 0.01em;
   }
 
   .max-badge {
@@ -335,13 +365,14 @@
   }
 
   .col h3 {
-    font-family: var(--serif);
-    font-style: italic;
-    font-weight: 400;
-    font-size: 22px;
-    letter-spacing: 0.18em;
+    font-family: var(--sans);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.32em;
     text-transform: uppercase;
     margin-bottom: 24px;
+    color: var(--ink);
   }
 
   .col ul {
@@ -349,13 +380,14 @@
   }
 
   .col li {
-    font-family: var(--serif);
-    font-style: italic;
+    font-family: var(--sans);
+    font-style: normal;
     font-weight: 300;
-    font-size: clamp(16px, 1.2vw, 18px);
+    font-size: clamp(14px, 1.05vw, 16px);
     line-height: 1.7;
-    padding: 10px 0;
+    padding: 12px 0;
     border-bottom: 1px solid var(--line);
+    letter-spacing: 0.01em;
   }
 
   .col li:last-child { border: none; }
@@ -434,12 +466,13 @@
   }
 
   .phase .desc {
-    font-family: var(--serif);
-    font-style: italic;
+    font-family: var(--sans);
+    font-style: normal;
     font-weight: 300;
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.6;
-    color: var(--ink);
+    color: var(--muted);
+    letter-spacing: 0.01em;
   }
 
   .timeline-line {
@@ -479,11 +512,13 @@
   }
 
   .investment .price small {
-    font-size: 0.5em;
+    font-family: var(--sans);
+    font-size: 12px;
     color: var(--muted);
-    font-style: italic;
+    font-style: normal;
+    font-weight: 300;
     display: block;
-    margin-top: 10px;
+    margin-top: 14px;
     letter-spacing: 0.04em;
   }
 
@@ -700,83 +735,17 @@
           <div class="num">—</div>
           <div class="name">Marketing</div>
         </div>
+        <div class="team-cell team-cell-open">
+          <div class="num">?</div>
+          <div class="name">Andere<br/>afdeling?</div>
+        </div>
       </div>
-      <p class="body-text" style="margin-top: 32px; font-size: 14px; color: var(--muted);">Voorbeelden — definitieve scope in overleg.</p>
+      <p class="body-text" style="margin-top: 32px; font-size: 13px; color: var(--muted);">Voorbeelden — definitieve scope in overleg.</p>
     </div>
   </section>
 
-  <!-- SLIDE 6 — OPERATIONELE TEAMS -->
+  <!-- SLIDE 6 — INVESTERING -->
   <section class="slide" data-slide="6">
-    <div class="slide-inner">
-      <div class="eyebrow">Operationele teams</div>
-      <h2>Sneller. Slimmer.<br/>Consistenter.</h2>
-      <div class="three-col">
-        <div class="col">
-          <h3>E-commerce</h3>
-          <ul>
-            <li>Productteksten</li>
-            <li>Reviews analyseren</li>
-            <li>Prijsinzichten</li>
-            <li>FAQ automatisch</li>
-          </ul>
-        </div>
-        <div class="col-divider"></div>
-        <div class="col">
-          <h3>Customer Service</h3>
-          <ul>
-            <li>Antwoordtemplates</li>
-            <li>Ticket routing</li>
-            <li>Tone of voice</li>
-            <li>Snellere afhandeling</li>
-          </ul>
-        </div>
-        <div class="col-divider"></div>
-        <div class="col">
-          <h3>Management</h3>
-          <ul>
-            <li>Rapporten analyseren</li>
-            <li>Meetings samenvatten</li>
-            <li>Trends spotten</li>
-            <li>Executive summaries</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SLIDE 7 — CREATIEVE TEAMS — MET MAX -->
-  <section class="slide" data-slide="7">
-    <div class="slide-inner">
-      <div class="eyebrow">Creatieve teams</div>
-      <span class="max-badge">MET MAX</span>
-      <h2>Design &amp; Marketing.<br/>Met creatieve diepgang.</h2>
-      <p class="body-text">Voor de creatieve afdelingen haken we MAX aan — voor design en marketing met visie en vakmanschap, niet alleen prompts.</p>
-      <div class="two-col">
-        <div class="col">
-          <h3>Design</h3>
-          <ul>
-            <li>Ideeën &amp; concepten</li>
-            <li>Visuele varianten</li>
-            <li>Mood boards</li>
-            <li>Creatieve exploratie</li>
-          </ul>
-        </div>
-        <div class="col-divider"></div>
-        <div class="col">
-          <h3>Marketing</h3>
-          <ul>
-            <li>Copy &amp; teksten</li>
-            <li>Campagnes</li>
-            <li>Content kalender</li>
-            <li>Kanaalstrategie</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SLIDE 8 — INVESTERING -->
-  <section class="slide" data-slide="8">
     <div class="slide-inner">
       <div class="eyebrow">Investering</div>
       <h2>Eén traject.<br/>Vijf afdelingen.</h2>
@@ -827,7 +796,7 @@
     <span class="arrow">←</span><span>Vorige</span>
   </button>
   <div class="counter">
-    <span id="current">01</span><span class="total"> / 08</span>
+    <span id="current">01</span><span class="total"> / 06</span>
   </div>
   <button class="nav-btn" id="next" aria-label="Volgende slide">
     <span>Volgende</span><span class="arrow">→</span>
